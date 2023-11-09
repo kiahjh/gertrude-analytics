@@ -1,23 +1,24 @@
 import type { AdminData } from "./types";
 
 export default async function getAdminData(): Promise<AdminResult> {
-  const res = await (
-    await fetch(`https://api.gertrude.app/pairql/super-admin/QueryAdmins`, {
+  const res = await await fetch(
+    `https://api.gertrude.app/pairql/super-admin/QueryAdmins`,
+    {
       method: `POST`,
       headers: {
         "X-SuperAdminToken": process.env.SUPER_ADMIN_TOKEN ?? ``,
       },
-    })
-  ).json();
-  if (Array.isArray(res)) {
+    },
+  );
+  if (res.status === 200) {
     return {
       success: true,
-      data: res,
+      data: await res.json(),
     };
   }
   return {
     success: false,
-    error: res.error || `Unknown error`,
+    error: (await res.json()).error || `Unknown error`,
   };
 }
 

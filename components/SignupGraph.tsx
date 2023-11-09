@@ -71,8 +71,8 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
   );
 
   return (
-    <div className="p-4 rounded-3xl border flex flex-col">
-      <div className="h-72 flex justify-between bg-slate-50 rounded-3xl">
+    <div className="p-4 rounded-3xl border flex flex-col h-96">
+      <div className="flex-grow flex justify-between bg-slate-50 rounded-3xl">
         {signupData.map((data, index) => {
           const maxHeight = 5;
           const nextData = signupData[index + 1];
