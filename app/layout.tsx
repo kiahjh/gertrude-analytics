@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import React from "react";
+import React, { Suspense } from "react";
 import { cookies } from "next/headers";
 import GlobalStateProvider from "@/lib/state/GlobalStateProvider";
 import "./globals.css";
@@ -20,7 +20,17 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <body>
           <div className="min-h-screen flex">
             <Sidebar />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow ml-52">
+              <Suspense
+                fallback={
+                  <div className="flex justify-center items-center h-full">
+                    loading...
+                  </div>
+                }
+              >
+                {children}
+              </Suspense>
+            </main>
           </div>
         </body>
       </html>

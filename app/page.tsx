@@ -1,20 +1,22 @@
-import { Suspense } from "react";
 import type { NextPage } from "next";
-import SignupGraph from "@/components/SignupGraphContainer";
+import getAdminData from "@/lib/get-data";
+import SignupGraph from "@/components/SignupGraph";
+import OverallStatsBlock from "@/components/OverallStatsBlock";
+import OnboardingSuccessStatBlock from "@/components/OnboardingSuccessStatBlock";
 
-const Home: NextPage = async () => (
-  <main className="p-12">
-    <div>
-      <Suspense
-        fallback={
-          <div className="bg-slate-100 rounded-3xl h-96 animate-pulse border" />
-        }
-      >
-        <SignupGraph />
-      </Suspense>
-      <div className="mt-8 grid gap-2"></div>
-    </div>
-  </main>
-);
+const Home: NextPage = async () => {
+  const adminData = await getAdminData();
+  if (!adminData.success) {
+    return <div>{adminData.error}</div>;
+  }
+  return (
+    <main className="p-12 flex flex-col gap-8">
+      <h1 className="font-semibold text-4xl">Gertrude analytics</h1>
+      <OverallStatsBlock admins={adminData.data} />
+      <SignupGraph data={adminData.data} />
+      <OnboardingSuccessStatBlock admins={adminData.data} />
+    </main>
+  );
+};
 
 export default Home;
