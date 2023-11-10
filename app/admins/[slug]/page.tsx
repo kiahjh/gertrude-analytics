@@ -105,6 +105,11 @@ const IndividualAdminPage: React.FC<{ params: { slug: string } }> = async ({
               </div>
             </div>
             <div className="mt-4 flex flex-col gap-2">
+              {child.installations.length === 0 && (
+                <div className="bg-slate-50 p-4 flex justify-center items-center rounded-2xl text-lg text-slate-400 font-medium">
+                  No app installations
+                </div>
+              )}
               {child.installations.map((install) => (
                 <div className="bg-slate-50 rounded-xl p-4 flex justify-between items-center">
                   <div className="flex flex-col">

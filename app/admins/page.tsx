@@ -10,6 +10,7 @@ const AdminsPage: NextPage = async () => {
   }
   return (
     <div className="p-12 flex flex-col gap-4">
+      <h1 className="text-4xl font-semibold mb-4">Gertrude admins</h1>
       {admins.data
         .sort(
           (a, b) =>

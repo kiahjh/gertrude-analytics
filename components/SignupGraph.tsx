@@ -74,7 +74,11 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
     <div className="p-4 rounded-3xl border flex flex-col h-96">
       <div className="flex-grow flex justify-between bg-slate-50 rounded-3xl">
         {signupData.map((data, index) => {
-          const maxHeight = 5;
+          const maxHeight =
+            signupData.reduce(
+              (acc, cur) => (cur.numSignups > acc ? cur.numSignups : acc),
+              0,
+            ) + 2;
           const nextData = signupData[index + 1];
 
           const direction =

@@ -3,8 +3,8 @@ import type { AdminData } from "@/lib/types";
 
 const OverallStatsBlock: React.FC<{ admins: AdminData[] }> = ({ admins }) => {
   const adminCount = admins.length;
-  const activeAdminCount = admins.filter(
-    (admin) => admin.children.length > 0,
+  const activeAdminCount = admins.filter((admin) =>
+    admin.children.some((child) => child.installations.length > 0),
   ).length;
   const userCount = admins.reduce(
     (acc, admin) => acc + admin.children.length,
@@ -16,7 +16,7 @@ const OverallStatsBlock: React.FC<{ admins: AdminData[] }> = ({ admins }) => {
 
   return (
     <div className="border rounded-3xl p-6 flex items-center justify-around gap-8">
-      <Stat title="Admins using Gertrude" value={adminCount} />
+      <Stat title="Admin accounts" value={adminCount} />
       <Stat title="Active admins" value={activeAdminCount} />
       <Stat title="Protected users" value={userCount} />
       <Stat title="App installations" value={computerCount} />
@@ -28,7 +28,7 @@ export default OverallStatsBlock;
 
 const Stat: React.FC<{ title: string; value: number }> = ({ title, value }) => (
   <div className="flex flex-col items-center">
-    <span className="text-5xl font-bold">{value}</span>
+    <span className="text-5xl font-bold">{value.toLocaleString()}</span>
     <span className="text-slate-500 text-lg">{title}</span>
   </div>
 );
