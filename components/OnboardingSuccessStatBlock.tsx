@@ -26,6 +26,9 @@ const OnboardingSuccessStatBlock: React.FC<{ admins: AdminData[] }> = ({
           {successRate}% of signups successfully onboard
         </span>
       </div>
+      <div className="flex-grow flex justify-center items-center bg-slate-100 text-xl font-medium text-slate-400 rounded-2xl ml-2">
+        <span>{100 - successRate}% don't</span>
+      </div>
     </div>
   );
 };

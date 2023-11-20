@@ -90,13 +90,34 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
 
           return (
             <div
-              className="flex flex-col justify-end w-[calc((1/7)*100%)] items-center relative -translate-y-8"
+              className="flex justify-center w-[calc((1/7)*100%)] items-end relative -translate-y-8"
               key={data.time.toISOString() + state.graphTimespan}
             >
+              <div className="w-full h-full translate-y-8 rounded-lg z-0 flex justify-center group cursor-pointer items-center">
+                <div className="h-full w-1 bg-fuchsia-500 rounded-full self-stretch opacity-0 group-hover:opacity-100 absolute" />
+                <div className="absolute bg-white shadow-lg rounded-xl p-6 w-64 right-[calc(50%+8px)] pointer-events-none opacity-0 group-hover:opacity-100 flex flex-col">
+                  <span className="text-slate-400 text-sm">
+                    {data.time.toLocaleDateString()}
+                  </span>
+                  <span className="text-lg font-semibold">
+                    {data.numSignups || `No`} new signup
+                    {data.numSignups !== 1 && `s`}
+                  </span>
+                  {data.admins.length > 0 && (
+                    <ul>
+                      {data.admins.map((admin) => (
+                        <li className="text-sm text-slate-500">
+                          <span>{admin.email}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
               {nextData && (
                 <div
                   className={cx(
-                    `absolute w-full left-1/2 min-h-[4px] scale-x-[102%]`,
+                    `absolute w-full left-1/2 min-h-[4px] scale-x-[102%] z-10 pointer-events-none`,
                   )}
                   style={{
                     height: `calc(${
@@ -117,9 +138,6 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
                   />
                 </div>
               )}
-              {/* <span className="translate-y-8"> */}
-              {/*   {data.time.toLocaleDateString(`en-US`, { weekday: `long` })} */}
-              {/* </span> */}
             </div>
           );
         })}
@@ -136,7 +154,7 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
             )}
           >
             {percentChange >= 0 && `+`}
-            {percentChange}%
+            {percentChange.toLocaleString()}%
           </span>
         </div>
         <div className="flex gap-8 items-center">
