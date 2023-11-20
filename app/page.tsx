@@ -16,8 +16,9 @@ const Home: NextPage = async () => {
       <OverallStatsBlock admins={adminData.data} />
       <SignupGraph data={adminData.data} />
       <OnboardingSuccessStatBlock admins={adminData.data} />
-      <div className="flex">
-        <AppVersionBlock admins={adminData.data} />
+      <div className="flex gap-8">
+        <AppVersionBlock admins={adminData.data} type="app" />
+        <AppVersionBlock admins={adminData.data} type="filter" />
       </div>
     </main>
   );

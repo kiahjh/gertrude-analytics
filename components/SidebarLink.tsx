@@ -18,7 +18,7 @@ const SidebarLink: React.FC<Props> = ({ href, children }) => {
       className={cx(
         `px-4 py-2 rounded-xl font-medium text-lg transition-[background-color,color,box-shadow] duration-300`,
         href === path
-          ? `bg-white shadow-lg shadow-violet-900/5`
+          ? `bg-white shadow-md shadow-violet-900/5`
           : `hover:bg-violet-100`,
       )}
     >

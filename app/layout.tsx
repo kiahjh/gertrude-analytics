@@ -18,9 +18,9 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <GlobalStateProvider>
       <html lang="en">
         <body>
-          <div className="min-h-screen flex">
+          <div className="min-h-screen flex bg-violet-50">
             <Sidebar />
-            <main className="flex-grow ml-52">
+            <main className="flex-grow ml-52 my-4 h-[calc(100vh-32px)] rounded-l-xl shadow-md shadow-violet-900/5 bg-white overflow-scroll">
               <Suspense
                 fallback={
                   <div className="flex justify-center items-center h-full">

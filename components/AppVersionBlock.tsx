@@ -1,31 +1,35 @@
 import React from "react";
 import type { AdminData } from "@/lib/types";
 
-const AppVersionBlock: React.FC<{ admins: AdminData[] }> = ({ admins }) => {
+const AppVersionBlock: React.FC<{
+  admins: AdminData[];
+  type: "app" | "filter";
+}> = ({ admins, type }) => {
+  const versionString = type === `app` ? `appVersion` : `filterVersion`;
   const installations = admins
     .flatMap((admins) => admins.children)
     .flatMap((child) => child.installations);
   const appVersions = installations.reduce((acc, install) => {
-    if (acc.includes(install.appVersion)) {
+    if (acc.includes(install[versionString])) {
       return acc;
     }
-    return [...acc, install.appVersion];
+    return [...acc, install[versionString]];
   }, [] as string[]);
 
   return (
     <div className="flex flex-col rounded-3xl gap-1 border p-8 pt-4">
       <h3 className="text-xl font-semibold self-center mb-4">
-        App version installs
+        <span className="capitalize">{type}</span> version installs
       </h3>
       {appVersions
         .sort(
           (a, b) =>
-            installations.filter((i) => i.appVersion === b).length -
-            installations.filter((i) => i.appVersion === a).length,
+            installations.filter((i) => i[versionString] === b).length -
+            installations.filter((i) => i[versionString] === a).length,
         )
         .map((version, i) => {
           const versionDownloads = installations.filter(
-            (i) => i.appVersion === version,
+            (i) => i[versionString] === version,
           ).length;
           const percentage = (versionDownloads * 100) / installations.length;
           return (
