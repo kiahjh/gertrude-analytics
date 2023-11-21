@@ -8,6 +8,7 @@ export default async function getAdminData(): Promise<AdminResult> {
       headers: {
         "X-SuperAdminToken": process.env.SUPER_ADMIN_TOKEN ?? ``,
       },
+      cache: `no-store`,
     },
   );
   if (res.status === 200) {
