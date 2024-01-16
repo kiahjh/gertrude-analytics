@@ -1,7 +1,7 @@
 import type { AdminData } from "./types";
 
 export default async function getAdminData(): Promise<AdminResult> {
-  const res = await await fetch(
+  const res = await fetch(
     `https://api.gertrude.app/pairql/super-admin/QueryAdmins`,
     {
       method: `POST`,
@@ -17,9 +17,10 @@ export default async function getAdminData(): Promise<AdminResult> {
       data: await res.json(),
     };
   }
+
   return {
     success: false,
-    error: (await res.json()).error || `Unknown error`,
+    error: (await res.json()).debugMessage || `Unknown error`,
   };
 }
 

@@ -8,7 +8,7 @@ import AppVersionBlock from "@/components/AppVersionBlock";
 const Home: NextPage = async () => {
   const adminData = await getAdminData();
   if (!adminData.success) {
-    return <div>{adminData.error}</div>;
+    return <pre>{adminData.error}</pre>;
   }
   return (
     <main className="p-12 flex flex-col gap-8">
