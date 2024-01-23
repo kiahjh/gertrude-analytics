@@ -56,15 +56,15 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
     }),
   );
 
-  if (!signupData || !lastPeriodSignupData) return <div>Error: TODO</div>;
+  if (!signupData || !lastPeriodSignupData) return <div>Error: TODO 1</div>;
 
   const [lastPeriodSignups, thisPeriodSignups] = [
     lastPeriodSignupData,
     signupData,
   ].map((period) => period.reduce((acc, cur) => acc + cur.numSignups, 0));
 
-  if (lastPeriodSignups === undefined || !thisPeriodSignups)
-    return <div>Error: TODO</div>;
+  if (lastPeriodSignups === undefined || thisPeriodSignups === undefined)
+    return <div>Error: TODO 2</div>;
 
   const percentChange = Math.round(
     ((thisPeriodSignups - lastPeriodSignups) / lastPeriodSignups) * 100,
@@ -85,8 +85,8 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
             data.numSignups > (nextData?.numSignups ?? 0)
               ? `down`
               : data.numSignups < (nextData?.numSignups ?? 0)
-              ? `up`
-              : `flat`;
+                ? `up`
+                : `flat`;
 
           return (
             <div
