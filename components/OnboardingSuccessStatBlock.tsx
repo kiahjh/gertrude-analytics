@@ -1,17 +1,11 @@
 import React from "react";
 import type { AdminData } from "@/lib/types";
+import { isOnboarded } from "@/lib/utils";
 
 const OnboardingSuccessStatBlock: React.FC<{ admins: AdminData[] }> = ({
   admins,
 }) => {
-  const successfulAdmins = admins.filter((admin) =>
-    admin.children.reduce((acc, child) => {
-      if (child.installations.length > 0) {
-        return true;
-      }
-      return acc;
-    }, false),
-  );
+  const successfulAdmins = admins.filter(isOnboarded);
   const successRate = Math.round(
     (successfulAdmins.length / admins.length) * 100,
   );
@@ -22,7 +16,7 @@ const OnboardingSuccessStatBlock: React.FC<{ admins: AdminData[] }> = ({
         className="bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-2xl flex justify-center items-center"
         style={{ width: `${successRate}%` }}
       >
-        <span className="text-white text-2xl font-semibold">
+        <span className="text-white text-2xl font-semibold text-center !leading-[1em]">
           {successRate}% of signups successfully onboard
         </span>
       </div>

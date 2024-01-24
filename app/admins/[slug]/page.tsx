@@ -2,6 +2,7 @@ import React from "react";
 import cx from "classnames";
 import { notFound } from "next/navigation";
 import getAdminData from "@/lib/get-data";
+import SubscriptionStatusBadge from "@/components/SubscriptionStatusBadge";
 
 const IndividualAdminPage: React.FC<{ params: { slug: string } }> = async ({
   params,
@@ -14,29 +15,12 @@ const IndividualAdminPage: React.FC<{ params: { slug: string } }> = async ({
   if (!admin) {
     return notFound();
   }
-  const statusColors = {
-    pendingEmailVerification: `bg-yellow-200 text-yellow-800`,
-    trialing: `bg-blue-100 text-blue-800`,
-    trialExpiringSoon: `bg-fuchsia-200 text-fuchsia-800`,
-    overdue: `bg-red-200 text-red-800`,
-    paid: `bg-green-200 text-green-800`,
-    unpaid: `bg-red-200 text-red-800`,
-    pendingAccountDeletion: `bg-gray-200 text-gray-800`,
-    complimentary: `bg-green-200 text-green-800`,
-  };
 
   return (
     <div className="p-12">
       <div className={cx(`border rounded-3xl flex flex-col`)}>
         <div className="p-8">
-          <div
-            className={cx(
-              `uppercase text-xs font-medium py-1 px-4 rounded-full w-fit`,
-              statusColors[admin.subscriptionStatus],
-            )}
-          >
-            {admin.subscriptionStatus}
-          </div>
+          <SubscriptionStatusBadge status={admin.subscriptionStatus} />
           <h1 className="text-3xl font-semibold my-2">{admin.email}</h1>
           <h2 className="text-slate-400">{admin.id}</h2>
         </div>
