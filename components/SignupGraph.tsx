@@ -5,6 +5,7 @@ import cx from "classnames";
 import type { AdminData, TimespanOption } from "@/lib/types";
 import GraphSection from "./GraphSection";
 import { useGlobalState } from "@/lib/hooks";
+import { isActive, isOnboarded } from "@/lib/utils";
 
 const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
   const { state } = useGlobalState();
@@ -95,7 +96,7 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
             >
               <div className="w-full h-full translate-y-8 rounded-lg z-0 flex justify-center group cursor-pointer items-center">
                 <div className="h-full w-1 bg-fuchsia-500 rounded-full self-stretch opacity-0 group-hover:opacity-100 absolute" />
-                <div className="absolute bg-white shadow-lg rounded-xl p-6 w-64 right-[calc(50%+8px)] pointer-events-none opacity-0 group-hover:opacity-100 flex flex-col">
+                <div className="absolute overflow-hidden bg-white shadow-lg rounded-xl p-6 w-64 right-[calc(50%+8px)] pointer-events-none opacity-0 group-hover:opacity-100 flex flex-col">
                   <span className="text-slate-400 text-sm">
                     {data.time.toLocaleDateString()}
                   </span>
@@ -106,7 +107,21 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
                   {data.admins.length > 0 && (
                     <ul>
                       {data.admins.map((admin) => (
-                        <li className="text-sm text-slate-500">
+                        <li
+                          className="text-sm text-slate-500 flex gap-1 items-center"
+                          key={admin.id}
+                        >
+                          <div
+                            className={cx(
+                              "w-2 h-2 rounded-full bg-slate-200 shrink-0",
+                              !isActive(admin) &&
+                                isOnboarded(admin) &&
+                                `!bg-yellow-500`,
+                              isActive(admin) &&
+                                isOnboarded(admin) &&
+                                `!bg-green-500`,
+                            )}
+                          ></div>
                           <span>{admin.email}</span>
                         </li>
                       ))}

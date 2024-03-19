@@ -19,50 +19,74 @@ const AdminsPage: NextPage = async () => {
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )
-        .map((admin) => (
-          <Link
-            href={`/admins/${admin.id}`}
-            className="border p-4 rounded-2xl hover:bg-violet-50 transition-colors duration-200 active:bg-violet-100"
-            key={admin.id}
-          >
-            <div className="flex justify-between items-center">
-              <span className="font-semibold text-xl w-80">{admin.email}</span>
-              <span className="text-slate-400">
-                {new Date(admin.createdAt).toLocaleDateString()}
-              </span>
-              <span className="w-28 flex justify-end text-lg font-medium text-slate-700">
-                {admin.children.length}
-                {` `}
-                {admin.children.length === 1 ? `child` : `children`}
-              </span>
-            </div>
-            <div className="flex items-center justify-between mt-4 gap-2">
-              <div className="flex gap-2 items-center">
-                <div
-                  className={cx(
-                    `uppercase text-xs font-medium py-1 px-4 rounded-full w-36 flex justify-center`,
-                    isActive(admin)
-                      ? `bg-green-200 text-green-800`
-                      : `bg-slate-100 text-slate-300`,
-                  )}
-                >
-                  {isActive(admin) ? `active` : `inactive`}
+        .map((admin) => {
+          if (isOnboarded(admin)) {
+            return (
+              <Link
+                href={`/admins/${admin.id}`}
+                className={cx(
+                  "border p-4 rounded-2xl",
+                  isActive(admin)
+                    ? `border-green-500 bg-green-50 hover:bg-green-100`
+                    : `border-slate-400 hover:bg-slate-50`,
+                )}
+                key={admin.id}
+              >
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-xl w-80">
+                    {admin.email}
+                  </span>
+                  <span className="text-slate-400">
+                    {new Date(admin.createdAt).toLocaleDateString()}
+                  </span>
+                  <span className="w-28 flex justify-end text-lg font-medium text-slate-700">
+                    {admin.children.length}
+                    {` `}
+                    {admin.children.length === 1 ? `child` : `children`}
+                  </span>
                 </div>
-                <div
-                  className={cx(
-                    `uppercase text-xs font-medium py-1 px-4 rounded-full w-36 flex justify-center`,
-                    isOnboarded(admin)
-                      ? `bg-green-200 text-green-800`
-                      : `bg-slate-100 text-slate-300`,
-                  )}
-                >
-                  {isOnboarded(admin) ? `onboarded` : `not onboarded`}
+                <div className="flex items-center justify-between mt-4 gap-2">
+                  <div className="flex gap-2 items-center">
+                    <div
+                      className={cx(
+                        `uppercase text-xs font-medium py-1 px-4 rounded-full w-36 flex justify-center`,
+                        isActive(admin)
+                          ? `bg-green-200 text-green-800`
+                          : `bg-slate-100 text-slate-300`,
+                      )}
+                    >
+                      {isActive(admin) ? `active` : `inactive`}
+                    </div>
+                    <div
+                      className={cx(
+                        `uppercase text-xs font-medium py-1 px-4 rounded-full w-36 flex justify-center`,
+                        isOnboarded(admin)
+                          ? `bg-green-200 text-green-800`
+                          : `bg-slate-100 text-slate-300`,
+                      )}
+                    >
+                      {isOnboarded(admin) ? `onboarded` : `not onboarded`}
+                    </div>
+                  </div>
+                  <SubscriptionStatusBadge status={admin.subscriptionStatus} />
                 </div>
-              </div>
-              <SubscriptionStatusBadge status={admin.subscriptionStatus} />
-            </div>
-          </Link>
-        ))}
+              </Link>
+            );
+          } else {
+            return (
+              <Link
+                href={`/admins/${admin.id}`}
+                className="flex items-center gap-2 px-4 -my-1 hover:bg-slate-50"
+              >
+                <span className="text-slate-400 w-20">
+                  {new Date(admin.createdAt).toLocaleDateString()}
+                </span>
+                <span className="text-slate-200">-</span>
+                <span className="text-slate-300 -my-1">{admin.email}</span>
+              </Link>
+            );
+          }
+        })}
     </div>
   );
 };
