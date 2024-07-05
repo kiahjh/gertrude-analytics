@@ -1,10 +1,10 @@
-import React from "react";
-import Link from "next/link";
-import cx from "classnames";
-import type { NextPage } from "next";
-import getAdminData from "@/lib/get-data";
-import SubscriptionStatusBadge from "@/components/SubscriptionStatusBadge";
-import { isActive, isOnboarded } from "@/lib/utils";
+import React from 'react';
+import Link from 'next/link';
+import cx from 'classnames';
+import type { NextPage } from 'next';
+import getAdminData from '@/lib/get-data';
+import SubscriptionStatusBadge from '@/components/SubscriptionStatusBadge';
+import { isActive, isOnboarded } from '@/lib/utils';
 
 const AdminsPage: NextPage = async () => {
   const admins = await getAdminData();
@@ -15,17 +15,14 @@ const AdminsPage: NextPage = async () => {
     <div className="p-12 flex flex-col gap-4">
       <h1 className="text-4xl font-semibold mb-4">Gertrude admins</h1>
       {admins.data
-        .sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-        )
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         .map((admin) => {
           if (isOnboarded(admin)) {
             return (
               <Link
                 href={`/admins/${admin.id}`}
                 className={cx(
-                  "border p-4 rounded-2xl",
+                  `border p-4 rounded-2xl`,
                   isActive(admin)
                     ? `border-green-500 bg-green-50 hover:bg-green-100`
                     : `border-slate-400 hover:bg-slate-50`,
@@ -33,9 +30,7 @@ const AdminsPage: NextPage = async () => {
                 key={admin.id}
               >
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold text-xl w-80">
-                    {admin.email}
-                  </span>
+                  <span className="font-semibold text-xl w-80">{admin.email}</span>
                   <span className="text-slate-400">
                     {new Date(admin.createdAt).toLocaleDateString()}
                   </span>
@@ -67,6 +62,11 @@ const AdminsPage: NextPage = async () => {
                     >
                       {isOnboarded(admin) ? `onboarded` : `not onboarded`}
                     </div>
+                    {admin.hasGclid && (
+                      <div className="text-xs font-medium bg-orange-300 text-white uppercase w-5 h-5 flex rounded-full items-center justify-center">
+                        <span>G</span>
+                      </div>
+                    )}
                   </div>
                   <SubscriptionStatusBadge status={admin.subscriptionStatus} />
                 </div>
