@@ -11,6 +11,7 @@ const AdminsPage: NextPage = async () => {
   if (!admins.success) {
     return <div>{admins.error}</div>;
   }
+
   return (
     <div className="p-12 flex flex-col gap-4">
       <h1 className="text-4xl font-semibold mb-4">Gertrude admins</h1>
@@ -20,6 +21,7 @@ const AdminsPage: NextPage = async () => {
           if (isOnboarded(admin)) {
             return (
               <Link
+                key={admin.id}
                 href={`/admins/${admin.id}`}
                 className={cx(
                   `border p-4 rounded-2xl`,
@@ -27,7 +29,6 @@ const AdminsPage: NextPage = async () => {
                     ? `border-green-500 bg-green-50 hover:bg-green-100`
                     : `border-slate-400 hover:bg-slate-50`,
                 )}
-                key={admin.id}
               >
                 <div className="flex justify-between items-center">
                   <span className="font-semibold text-xl w-80">{admin.email}</span>
@@ -41,7 +42,7 @@ const AdminsPage: NextPage = async () => {
                   </span>
                 </div>
                 <div className="flex items-center justify-between mt-4 gap-2">
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-1.5 items-center">
                     <div
                       className={cx(
                         `uppercase text-xs font-medium py-1 px-4 rounded-full w-36 flex justify-center`,
@@ -63,6 +64,7 @@ const AdminsPage: NextPage = async () => {
                       {isOnboarded(admin) ? `onboarded` : `not onboarded`}
                     </div>
                     {admin.hasGclid && <GoogleBadge />}
+                    <VariantBadge variant={admin.abTestVariant} />
                   </div>
                   <SubscriptionStatusBadge status={admin.subscriptionStatus} />
                 </div>
@@ -72,7 +74,7 @@ const AdminsPage: NextPage = async () => {
             return (
               <Link
                 href={`/admins/${admin.id}`}
-                className="flex items-center gap-2 px-4 -my-1 hover:bg-slate-50"
+                className="flex items-center gap-1 px-4 -my-1 hover:bg-slate-50"
               >
                 <span className="text-slate-400 w-20">
                   {new Date(admin.createdAt).toLocaleDateString()}
@@ -80,6 +82,7 @@ const AdminsPage: NextPage = async () => {
                 <span className="text-slate-200">-</span>
                 <span className="text-slate-300 -my-1">{admin.email}</span>
                 {admin.hasGclid && <GoogleBadge subtle />}
+                <VariantBadge variant={admin.abTestVariant} subtle />
               </Link>
             );
           }
@@ -89,6 +92,35 @@ const AdminsPage: NextPage = async () => {
 };
 
 export default AdminsPage;
+
+const VariantBadge: React.FC<{ variant?: string; subtle?: boolean }> = ({
+  variant,
+  subtle,
+}) => {
+  if (!variant) return null;
+  return (
+    <div
+      className={cx(
+        `text-xs font-medium text-white uppercase flex rounded-full items-center justify-center`,
+        !subtle ? `size-5 text-[14px]` : `size-4 text-[11px] opacity-40`,
+        variantColor(variant),
+      )}
+    >
+      <span>{variant.charAt(0).toUpperCase()}</span>
+    </div>
+  );
+};
+
+function variantColor(variant: string): string {
+  switch (variant) {
+    case `old_site`:
+      return `bg-red-300`;
+    case `new_site`:
+      return `bg-blue-200`;
+    default:
+      return `bg-slate-200`;
+  }
+}
 
 const GoogleBadge: React.FC<{ subtle?: boolean }> = ({ subtle }) => (
   <div

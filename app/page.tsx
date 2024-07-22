@@ -1,9 +1,9 @@
-import type { NextPage } from "next";
-import getAdminData from "@/lib/get-data";
-import SignupGraph from "@/components/SignupGraph";
-import OverallStatsBlock from "@/components/OverallStatsBlock";
-import OnboardingSuccessStatBlock from "@/components/OnboardingSuccessStatBlock";
-import AppVersionBlock from "@/components/AppVersionBlock";
+import type { NextPage } from 'next';
+import getAdminData from '@/lib/get-data';
+import SignupGraph from '@/components/SignupGraph';
+import OverallStatsBlock from '@/components/OverallStatsBlock';
+import OnboardingSuccessStatBlock from '@/components/OnboardingSuccessStatBlock';
+import AppVersionBlock from '@/components/AppVersionBlock';
 
 const Home: NextPage = async () => {
   const adminData = await getAdminData();
@@ -17,8 +17,8 @@ const Home: NextPage = async () => {
       <SignupGraph data={adminData.data} />
       <OnboardingSuccessStatBlock admins={adminData.data} />
       <div className="flex gap-8">
-        <AppVersionBlock admins={adminData.data} type="app" />
-        <AppVersionBlock admins={adminData.data} type="filter" />
+        <AppVersionBlock admins={adminData.data} type="app" key="app" />
+        <AppVersionBlock admins={adminData.data} type="filter" key="filter" />
       </div>
     </main>
   );
