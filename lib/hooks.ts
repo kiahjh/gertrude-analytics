@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import type React from "react";
-import type { Action, State } from "./state/store";
-import { GlobalStateContext } from "./state/GlobalStateProvider";
+import { useContext } from 'react';
+import type React from 'react';
+import type { Action, State } from './state/store';
+import { GlobalStateContext } from './state/GlobalStateProvider';
 
 export function useGlobalState(): {
   state: State;

@@ -1,8 +1,8 @@
-import React from "react";
-import cx from "classnames";
-import { notFound } from "next/navigation";
-import getAdminData from "@/lib/get-data";
-import SubscriptionStatusBadge from "@/components/SubscriptionStatusBadge";
+import React from 'react';
+import cx from 'classnames';
+import { notFound } from 'next/navigation';
+import getAdminData from '@/lib/get-data';
+import SubscriptionStatusBadge from '@/components/SubscriptionStatusBadge';
 
 const IndividualAdminPage: React.FC<{ params: { slug: string } }> = async ({
   params,
@@ -95,28 +95,25 @@ const IndividualAdminPage: React.FC<{ params: { slug: string } }> = async ({
                 </div>
               )}
               {child.installations.map((install) => (
-                <div className="bg-slate-50 rounded-xl p-4 flex justify-between items-center">
+                <div
+                  className="bg-slate-50 rounded-xl p-4 flex justify-between items-center"
+                  key={install.modelIdentifier}
+                >
                   <div className="flex flex-col">
                     <span className="font-semibold text-lg">
                       {install.modelIdentifier}
                     </span>
                     <span className="text-slate-500 text-sm">
                       App version:{` `}
-                      <span className="font-semibold">
-                        {install.appVersion}
-                      </span>
+                      <span className="font-semibold">{install.appVersion}</span>
                     </span>
                     <span className="text-slate-500 text-sm">
                       Filter version:{` `}
-                      <span className="font-semibold">
-                        {install.filterVersion}
-                      </span>
+                      <span className="font-semibold">{install.filterVersion}</span>
                     </span>
                     <span className="text-slate-500 text-sm">
                       Release channel:{` `}
-                      <span className="font-semibold">
-                        {install.appReleaseChannel}
-                      </span>
+                      <span className="font-semibold">{install.appReleaseChannel}</span>
                     </span>
                   </div>
                   <img

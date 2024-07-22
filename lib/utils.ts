@@ -1,4 +1,4 @@
-import type { AdminData } from "./types";
+import type { AdminData } from './types';
 
 // admin is active if it has children with installations and either monitoring turned on or keychains protecting said children
 export function isActive(admin: AdminData): boolean {
@@ -10,9 +10,7 @@ export function isActive(admin: AdminData): boolean {
   );
   const hasKeychains = admin.numKeychains > 0;
 
-  return (
-    hasChildrenWithInstallation && (hasChildrenWithMonitoring || hasKeychains)
-  );
+  return hasChildrenWithInstallation && (hasChildrenWithMonitoring || hasKeychains);
 }
 
 export function isOnboarded(admin: AdminData): boolean {
