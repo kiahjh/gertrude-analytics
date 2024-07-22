@@ -62,11 +62,7 @@ const AdminsPage: NextPage = async () => {
                     >
                       {isOnboarded(admin) ? `onboarded` : `not onboarded`}
                     </div>
-                    {admin.hasGclid && (
-                      <div className="text-xs font-medium bg-orange-300 text-white uppercase w-5 h-5 flex rounded-full items-center justify-center">
-                        <span>G</span>
-                      </div>
-                    )}
+                    {admin.hasGclid && <GoogleBadge />}
                   </div>
                   <SubscriptionStatusBadge status={admin.subscriptionStatus} />
                 </div>
@@ -83,6 +79,7 @@ const AdminsPage: NextPage = async () => {
                 </span>
                 <span className="text-slate-200">-</span>
                 <span className="text-slate-300 -my-1">{admin.email}</span>
+                {admin.hasGclid && <GoogleBadge subtle />}
               </Link>
             );
           }
@@ -92,3 +89,15 @@ const AdminsPage: NextPage = async () => {
 };
 
 export default AdminsPage;
+
+const GoogleBadge: React.FC<{ subtle?: boolean }> = ({ subtle }) => (
+  <div
+    title="From Google Ad click"
+    className={cx(
+      `text-xs font-medium text-white uppercase flex rounded-full items-center justify-center`,
+      !subtle ? `size-5 text-[14px] bg-orange-300` : `size-4 text-[11px] bg-gray-200`,
+    )}
+  >
+    <span>G</span>
+  </div>
+);
