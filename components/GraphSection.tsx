@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef } from "react";
-import cx from "classnames";
+import React, { useEffect, useRef } from 'react';
+import cx from 'classnames';
 
 interface Props {
   className?: string;
-  direction: "up" | "down" | "flat";
+  direction: 'up' | 'down' | 'flat';
 }
 
 const GraphSection: React.FC<Props> = ({ className, direction }) => {
@@ -31,13 +31,11 @@ const GraphSection: React.FC<Props> = ({ className, direction }) => {
     >
       <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height}>
         <path
-          d={`M 0 ${
-            direction === `up` ? height - 2 : direction === `down` ? 2 : 2
-          } C ${width / 2} ${
-            direction === `up` ? height - 2 : direction === `down` ? 2 : 2
-          }, ${width / 2} ${
-            direction === `up` ? 2 : direction === `down` ? height - 2 : 2
-          }, ${width} ${
+          d={`M 0 ${direction === `up` ? height - 2 : direction === `down` ? 2 : 2} C ${
+            width / 2
+          } ${direction === `up` ? height - 2 : direction === `down` ? 2 : 2}, ${
+            width / 2
+          } ${direction === `up` ? 2 : direction === `down` ? height - 2 : 2}, ${width} ${
             direction === `up` ? 2 : direction === `down` ? height - 2 : 2
           }`}
           fill="none"

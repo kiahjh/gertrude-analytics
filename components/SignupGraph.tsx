@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import cx from "classnames";
-import type { AdminData, TimespanOption } from "@/lib/types";
-import GraphSection from "./GraphSection";
-import { useGlobalState } from "@/lib/hooks";
-import { isActive, isOnboarded } from "@/lib/utils";
+import React from 'react';
+import cx from 'classnames';
+import type { AdminData, TimespanOption } from '@/lib/types';
+import GraphSection from './GraphSection';
+import { useGlobalState } from '@/lib/hooks';
+import { isActive, isOnboarded } from '@/lib/utils';
 
 const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
   const { state } = useGlobalState();
@@ -28,41 +28,36 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
   })();
 
   for (let i = 0; i < numDays; i++) {
-    timeOptions.push(
-      new Date(now.getFullYear(), now.getMonth(), now.getDate() - i),
-    );
+    timeOptions.push(new Date(now.getFullYear(), now.getMonth(), now.getDate() - i));
     lastPeriodTimeOptions.push(
       new Date(now.getFullYear(), now.getMonth(), now.getDate() - i - numDays),
     );
   }
 
-  const [signupData, lastPeriodSignupData] = [
-    timeOptions,
-    lastPeriodTimeOptions,
-  ].map((period) =>
-    period.reverse().map((time) => {
-      const admins = data.filter((admin) => {
-        const adminDate = new Date(admin.createdAt);
-        return (
-          adminDate.getDate() === time.getDate() &&
-          adminDate.getMonth() === time.getMonth() &&
-          adminDate.getFullYear() === time.getFullYear()
-        );
-      });
-      return {
-        time,
-        numSignups: admins.length,
-        admins,
-      };
-    }),
+  const [signupData, lastPeriodSignupData] = [timeOptions, lastPeriodTimeOptions].map(
+    (period) =>
+      period.reverse().map((time) => {
+        const admins = data.filter((admin) => {
+          const adminDate = new Date(admin.createdAt);
+          return (
+            adminDate.getDate() === time.getDate() &&
+            adminDate.getMonth() === time.getMonth() &&
+            adminDate.getFullYear() === time.getFullYear()
+          );
+        });
+        return {
+          time,
+          numSignups: admins.length,
+          admins,
+        };
+      }),
   );
 
   if (!signupData || !lastPeriodSignupData) return <div>Error: TODO 1</div>;
 
-  const [lastPeriodSignups, thisPeriodSignups] = [
-    lastPeriodSignupData,
-    signupData,
-  ].map((period) => period.reduce((acc, cur) => acc + cur.numSignups, 0));
+  const [lastPeriodSignups, thisPeriodSignups] = [lastPeriodSignupData, signupData].map(
+    (period) => period.reduce((acc, cur) => acc + cur.numSignups, 0),
+  );
 
   if (lastPeriodSignups === undefined || thisPeriodSignups === undefined)
     return <div>Error: TODO 2</div>;
@@ -86,8 +81,8 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
             data.numSignups > (nextData?.numSignups ?? 0)
               ? `down`
               : data.numSignups < (nextData?.numSignups ?? 0)
-                ? `up`
-                : `flat`;
+              ? `up`
+              : `flat`;
 
           return (
             <div
@@ -113,13 +108,9 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
                         >
                           <div
                             className={cx(
-                              "w-2 h-2 rounded-full bg-slate-200 shrink-0",
-                              !isActive(admin) &&
-                                isOnboarded(admin) &&
-                                `!bg-yellow-500`,
-                              isActive(admin) &&
-                                isOnboarded(admin) &&
-                                `!bg-green-500`,
+                              `w-2 h-2 rounded-full bg-slate-200 shrink-0`,
+                              !isActive(admin) && isOnboarded(admin) && `!bg-yellow-500`,
+                              isActive(admin) && isOnboarded(admin) && `!bg-green-500`,
                             )}
                           ></div>
                           <span>{admin.email}</span>
@@ -142,15 +133,11 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
                       maxHeight
                     }% ${direction === `flat` ? `` : `+ 4px`})`,
                     bottom: `calc(${
-                      (Math.min(data.numSignups, nextData.numSignups) * 100) /
-                      maxHeight
+                      (Math.min(data.numSignups, nextData.numSignups) * 100) / maxHeight
                     }% - 2px)`,
                   }}
                 >
-                  <GraphSection
-                    className="w-full h-full"
-                    direction={direction}
-                  />
+                  <GraphSection className="w-full h-full" direction={direction} />
                 </div>
               )}
             </div>
@@ -159,9 +146,7 @@ const SignupGraph: React.FC<{ data: AdminData[] }> = ({ data }) => {
       </div>
       <div className="pt-6 pb-2 px-4 flex justify-between items-center gap-8">
         <div className="flex flex-col w-52">
-          <span className="text-slate-500">
-            {thisPeriodSignups} new signups
-          </span>
+          <span className="text-slate-500">{thisPeriodSignups} new signups</span>
           <span
             className={cx(
               `text-4xl font-semibold`,
@@ -191,9 +176,7 @@ const TimespanButton: React.FC<{ option: TimespanOption }> = ({ option }) => {
   const { state, dispatch } = useGlobalState();
   return (
     <button
-      onClick={() =>
-        dispatch({ type: `graphTimespanOptionClicked`, payload: option })
-      }
+      onClick={() => dispatch({ type: `graphTimespanOptionClicked`, payload: option })}
       className={cx(
         `capitalize hover:scale-105 px-4 py-1 rounded-lg transition-[background-color,transform,color] duration-300 active:scale-95 shrink-0`,
         state.graphTimespan === option
