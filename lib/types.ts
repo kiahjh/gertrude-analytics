@@ -25,6 +25,7 @@ export interface Child {
 export interface AdminData {
   id: UUID;
   hasGclid: boolean;
+  abTestVariant?: string;
   email: string;
   subscriptionId?: string; // could theoretically link to stripe dashboard
   subscriptionStatus:

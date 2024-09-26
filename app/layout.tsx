@@ -1,9 +1,9 @@
-import crypto from "crypto";
-import React, { Suspense } from "react";
-import { cookies } from "next/headers";
-import GlobalStateProvider from "@/lib/state/GlobalStateProvider";
-import "./globals.css";
-import Sidebar from "@/components/Sidebar";
+import crypto from 'crypto';
+import React, { Suspense } from 'react';
+import { cookies } from 'next/headers';
+import GlobalStateProvider from '@/lib/state/GlobalStateProvider';
+import './globals.css';
+import Sidebar from '@/components/Sidebar';
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const accessToken = cookies().get(`access-token`);
