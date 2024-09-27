@@ -1,9 +1,9 @@
-import type { NextPage } from 'next';
-import getAdminData from '@/lib/get-data';
-import SignupGraph from '@/components/SignupGraph';
-import OverallStatsBlock from '@/components/OverallStatsBlock';
-import OnboardingSuccessStatBlock from '@/components/OnboardingSuccessStatBlock';
-import AppVersionBlock from '@/components/AppVersionBlock';
+import type { NextPage } from "next";
+import getAdminData from "@/lib/get-data";
+import SignupGraph from "@/components/SignupGraph";
+import OverallStatsBlock from "@/components/OverallStatsBlock";
+import OnboardingSuccessStatBlock from "@/components/OnboardingSuccessStatBlock";
+import AppVersionBlock from "@/components/AppVersionBlock";
 
 const Home: NextPage = async () => {
   const adminData = await getAdminData();

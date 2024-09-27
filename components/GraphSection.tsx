@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef } from 'react';
-import cx from 'classnames';
+import React, { useEffect, useRef } from "react";
+import cx from "classnames";
 
 interface Props {
   className?: string;
-  direction: 'up' | 'down' | 'flat';
+  direction: "up" | "down" | "flat";
 }
 
 const GraphSection: React.FC<Props> = ({ className, direction }) => {

@@ -1,11 +1,14 @@
-import React from 'react';
-import type { AdminData } from '@/lib/types';
-import { isActive } from '@/lib/utils';
+import React from "react";
+import type { AdminData } from "@/lib/types";
+import { isActive } from "@/lib/utils";
 
 const OverallStatsBlock: React.FC<{ admins: AdminData[] }> = ({ admins }) => {
   const adminCount = admins.length;
   const activeAdminCount = admins.filter(isActive).length;
-  const userCount = admins.reduce((acc, admin) => acc + admin.children.length, 0);
+  const userCount = admins.reduce(
+    (acc, admin) => acc + admin.children.length,
+    0,
+  );
   const computerCount = admins
     .flatMap((admin) => admin.children)
     .reduce((acc, child) => acc + child.installations.length, 0);
@@ -18,7 +21,10 @@ const OverallStatsBlock: React.FC<{ admins: AdminData[] }> = ({ admins }) => {
       <Stat title="Admin accounts" value={adminCount} />
       <Stat title="Protected users" value={userCount} />
       <Stat title="App installations" value={computerCount} />
-      <Stat title="Annual revenue" value={`$${annualRevenue.toLocaleString()}`} />
+      <Stat
+        title="Annual revenue"
+        value={`$${annualRevenue.toLocaleString()}`}
+      />
     </div>
   );
 };

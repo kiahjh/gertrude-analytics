@@ -1,4 +1,4 @@
-import type { TimespanOption } from '../types';
+import type { TimespanOption } from "../types";
 
 export interface State {
   graphTimespan: TimespanOption;

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import cx from 'classnames';
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import cx from "classnames";
 
 interface Props {
   href: string;
@@ -17,7 +17,9 @@ const SidebarLink: React.FC<Props> = ({ href, children }) => {
       href={href}
       className={cx(
         `px-4 py-2 rounded-xl font-medium text-lg transition-[background-color,color,box-shadow] duration-300`,
-        href === path ? `bg-white shadow-md shadow-violet-900/5` : `hover:bg-violet-100`,
+        href === path
+          ? `bg-white shadow-md shadow-violet-900/5`
+          : `hover:bg-violet-100`,
       )}
     >
       <span

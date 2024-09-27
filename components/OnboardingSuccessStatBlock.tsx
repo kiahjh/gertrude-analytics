@@ -1,10 +1,14 @@
-import React from 'react';
-import type { AdminData } from '@/lib/types';
-import { isOnboarded } from '@/lib/utils';
+import React from "react";
+import type { AdminData } from "@/lib/types";
+import { isOnboarded } from "@/lib/utils";
 
-const OnboardingSuccessStatBlock: React.FC<{ admins: AdminData[] }> = ({ admins }) => {
+const OnboardingSuccessStatBlock: React.FC<{ admins: AdminData[] }> = ({
+  admins,
+}) => {
   const successfulAdmins = admins.filter(isOnboarded);
-  const successRate = Math.round((successfulAdmins.length / admins.length) * 100);
+  const successRate = Math.round(
+    (successfulAdmins.length / admins.length) * 100,
+  );
 
   return (
     <div className="border-4 border-violet-500 h-20 rounded-3xl flex justify-start p-1.5">

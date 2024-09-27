@@ -1,9 +1,9 @@
-import React from 'react';
-import type { AdminData } from '@/lib/types';
+import React from "react";
+import type { AdminData } from "@/lib/types";
 
 const AppVersionBlock: React.FC<{
   admins: AdminData[];
-  type: 'app' | 'filter';
+  type: "app" | "filter";
 }> = ({ admins, type }) => {
   const versionString = type === `app` ? `appVersion` : `filterVersion`;
   const installations = admins
@@ -43,7 +43,8 @@ const AppVersionBlock: React.FC<{
               ></div>
               <div className="w-12 h-1 bg-slate-200 rounded-r-full" />
               <span className="h-0 -translate-y-3 text-slate-400 ml-2">
-                <span className="font-bold text-slate-700">{version}</span>:{` `}
+                <span className="font-bold text-slate-700">{version}</span>:
+                {` `}
                 {versionDownloads}
                 {` `}({Math.round(percentage)}%)
               </span>

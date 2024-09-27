@@ -1,9 +1,9 @@
-import React from 'react';
-import cx from 'classnames';
-import type { AdminData } from '@/lib/types';
+import React from "react";
+import cx from "classnames";
+import type { AdminData } from "@/lib/types";
 
 const SubscriptionStatusBadge: React.FC<{
-  status: AdminData['subscriptionStatus'];
+  status: AdminData["subscriptionStatus"];
 }> = ({ status }) => {
   const statusColors = {
     pendingEmailVerification: `bg-yellow-200 text-yellow-800`,
@@ -30,7 +30,7 @@ const SubscriptionStatusBadge: React.FC<{
 
 export default SubscriptionStatusBadge;
 
-function statusText(status: AdminData['subscriptionStatus']): string {
+function statusText(status: AdminData["subscriptionStatus"]): string {
   switch (status) {
     case `pendingEmailVerification`:
       return `Pending email verification`;
