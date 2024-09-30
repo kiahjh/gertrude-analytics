@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "classnames";
 import type { AdminData } from "@/lib/types";
 import { isActive } from "@/lib/utils";
 
@@ -14,26 +15,66 @@ const OverallStatsBlock: React.FC<{ admins: AdminData[] }> = ({ admins }) => {
     .reduce((acc, child) => acc + child.installations.length, 0);
   const annualRevenue =
     admins.filter((a) => a.subscriptionStatus === `paid`).length * 5 * 12;
+  const payingAdmins = admins.filter((a) => a.subscriptionStatus === `paid`);
+  const payingAdminCount = payingAdmins.length;
+  const activelyProtectedChildrenCount = payingAdmins.reduce(
+    (acc, admin) =>
+      acc +
+      admin.children.filter(
+        (child) =>
+          child.keyloggingEnabled ||
+          child.screenshotsEnabled ||
+          child.numKeys > 0,
+      ).length,
+    0,
+  );
 
   return (
-    <div className="border rounded-3xl p-6 flex items-center justify-around gap-8">
-      <Stat title="Active admins" value={activeAdminCount} />
-      <Stat title="Admin accounts" value={adminCount} />
-      <Stat title="Protected users" value={userCount} />
-      <Stat title="App installations" value={computerCount} />
+    <div className="border rounded-3xl p-6 flex flex-col items-start gap-8">
       <Stat
         title="Annual revenue"
         value={`$${annualRevenue.toLocaleString()}`}
+        size="lg"
       />
+      <div className="flex gap-8 items-center">
+        <Stat title="Paying admins" value={payingAdminCount} size="md" />
+        <Stat title="Active admins" value={activeAdminCount} size="md" />
+        <Stat
+          title="Actively protected children"
+          value={activelyProtectedChildrenCount}
+          size="md"
+        />
+      </div>
+      <div className="flex gap-8 items-center">
+        <Stat title="All-time signups" value={adminCount} size="sm" />
+        <Stat title="All-time children" value={userCount} size="sm" />
+        <Stat
+          title="All-time app installations"
+          value={computerCount}
+          size="sm"
+        />
+      </div>
     </div>
   );
 };
 
 export default OverallStatsBlock;
 
-const Stat: React.FC<{ title: string; value: any }> = ({ title, value }) => (
-  <div className="flex flex-col items-center">
-    <span className="text-5xl font-bold">{value.toLocaleString()}</span>
-    <span className="text-slate-500 text-lg">{title}</span>
+const Stat: React.FC<{
+  title: string;
+  value: any;
+  size: "sm" | "md" | "lg";
+}> = ({ title, value, size }) => (
+  <div className="flex flex-col items-start">
+    <span
+      className={cx(`font-bold`, {
+        "text-2xl !font-medium": size === `sm`,
+        "text-5xl": size === `md`,
+        "text-6xl": size === `lg`,
+      })}
+    >
+      {value.toLocaleString()}
+    </span>
+    <span className="text-slate-500">{title}</span>
   </div>
 );

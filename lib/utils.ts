@@ -9,9 +9,12 @@ export function isActive(admin: AdminData): boolean {
     (child) => child.keyloggingEnabled || child.screenshotsEnabled,
   );
   const hasKeychains = admin.numKeychains > 0;
+  const isAbleToUseTheApp = admin.subscriptionStatus !== `unpaid`;
 
   return (
-    hasChildrenWithInstallation && (hasChildrenWithMonitoring || hasKeychains)
+    hasChildrenWithInstallation &&
+    isAbleToUseTheApp &&
+    (hasChildrenWithMonitoring || hasKeychains)
   );
 }
 
