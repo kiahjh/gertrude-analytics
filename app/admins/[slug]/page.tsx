@@ -100,6 +100,15 @@ const IndividualAdminPage: React.FC<{ params: { slug: string } }> = async ({
                   key={install.modelIdentifier}
                 >
                   <div className="flex flex-col">
+                    {install.osVersionName && install.osVersionNumber ? (
+                      <span className="text-sm font-medium text-violet-500 bg-violet-100 rounded w-fit px-2 py-0.5 mb-2">
+                        {install.osVersionName} ({install.osVersionNumber})
+                      </span>
+                    ) : (
+                      <span className="text-sm font-medium text-slate-400 mb-2 pb-0.5">
+                        Unknown OS
+                      </span>
+                    )}
                     <span className="font-semibold text-lg">
                       {install.modelIdentifier}
                     </span>

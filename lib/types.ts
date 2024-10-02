@@ -13,6 +13,8 @@ export interface Installation {
   filterVersion: string; // semver
   modelIdentifier: string;
   appReleaseChannel: "stable" | "beta" | "canary";
+  osVersionNumber?: string;
+  osVersionName?: string;
   createdAt: ISODateString;
 }
 

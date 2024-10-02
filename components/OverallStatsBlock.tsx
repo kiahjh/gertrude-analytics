@@ -17,17 +17,19 @@ const OverallStatsBlock: React.FC<{ admins: AdminData[] }> = ({ admins }) => {
     admins.filter((a) => a.subscriptionStatus === `paid`).length * 5 * 12;
   const payingAdmins = admins.filter((a) => a.subscriptionStatus === `paid`);
   const payingAdminCount = payingAdmins.length;
-  const activelyProtectedChildrenCount = payingAdmins.reduce(
-    (acc, admin) =>
-      acc +
-      admin.children.filter(
-        (child) =>
-          child.keyloggingEnabled ||
-          child.screenshotsEnabled ||
-          child.numKeys > 0,
-      ).length,
-    0,
-  );
+  const activelyProtectedChildrenCount = admins
+    .filter(isActive)
+    .reduce(
+      (acc, admin) =>
+        acc +
+        admin.children.filter(
+          (child) =>
+            child.keyloggingEnabled ||
+            child.screenshotsEnabled ||
+            child.numKeys > 0,
+        ).length,
+      0,
+    );
 
   return (
     <div className="border rounded-3xl p-6 flex flex-col items-start gap-8">
