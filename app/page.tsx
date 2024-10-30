@@ -4,6 +4,7 @@ import SignupGraph from "@/components/SignupGraph";
 import OverallStatsBlock from "@/components/OverallStatsBlock";
 import OnboardingSuccessStatBlock from "@/components/OnboardingSuccessStatBlock";
 import AppVersionBlock from "@/components/AppVersionBlock";
+import UseCaseBlock from "@/components/UseCaseBlock";
 
 const Home: NextPage = async () => {
   const adminData = await getAdminData();
@@ -17,6 +18,7 @@ const Home: NextPage = async () => {
       <SignupGraph data={adminData.data} />
       <OnboardingSuccessStatBlock admins={adminData.data} />
       <div className="flex gap-8">
+        <UseCaseBlock admins={adminData.data} />
         <AppVersionBlock admins={adminData.data} type="app" key="app" />
         <AppVersionBlock admins={adminData.data} type="filter" key="filter" />
       </div>

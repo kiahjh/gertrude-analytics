@@ -13,7 +13,7 @@ const AdminsPage: NextPage = async () => {
   return (
     <div className="p-12 flex flex-col">
       <h1 className="text-4xl font-semibold">Gertrude admins</h1>
-      <p className="mb-8 mt-2 text-xl font-medium text-slate-600">
+      <p className="mb-4 mt-2 text-xl font-medium text-slate-600">
         <span className="font-mono font-bold text-black">
           {admins.data.length}
         </span>
@@ -33,6 +33,28 @@ const AdminsPage: NextPage = async () => {
         {` `}
         paid
       </p>
+      <ul className="flex items-center mb-8 gap-6">
+        <li className="flex items-center gap-2">
+          <div className="w-2 h-5 rounded-full bg-slate-200" />
+          <span className="text-slate-500">Not onboarded</span>
+        </li>
+        <li className="flex items-center gap-2">
+          <div className="w-2 h-5 rounded-full bg-yellow-500" />
+          <span className="text-slate-500">Onboarded but inactive</span>
+        </li>
+        <li className="flex items-center gap-2">
+          <div className="w-2 h-5 rounded-full bg-blue-500" />
+          <span className="text-slate-500">Just monitoring</span>
+        </li>
+        <li className="flex items-center gap-2">
+          <div className="w-2 h-5 rounded-full bg-green-500" />
+          <span className="text-slate-500">Just using keychains</span>
+        </li>
+        <li className="flex items-center gap-2">
+          <div className="w-2 h-5 rounded-full bg-gradient-to-b from-green-500 to-blue-500" />
+          <span className="text-slate-500">Using keychains and monitoring</span>
+        </li>
+      </ul>
       <div className="flex flex-col">
         {admins.data
           .sort(

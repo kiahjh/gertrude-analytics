@@ -2,31 +2,31 @@ import React from "react";
 import cx from "classnames";
 import Link from "next/link";
 import type { AdminData } from "@/lib/types";
-import { isActive, isOnboarded } from "@/lib/utils";
+import { getStatus } from "@/lib/utils";
 
 const AdminCard: React.FC<{ admin: AdminData }> = ({ admin }) => (
   <Link
     href={`/admins/${admin.id}`}
     className="flex odd:bg-slate-50 px-4 py-2 rounded-lg hover:z-10 border border-transparent hover:border-slate-400 relative"
   >
-    {admin.subscriptionStatus === `paid` && isActive(admin) && (
+    {admin.subscriptionStatus === `paid` && (
       <>
-        <span className="text-5xl font-mono font-bold text-green-500 absolute left-1 top-3.5">
+        <span className="text-4xl font-mono font-bold text-green-500 absolute -left-6 top-4">
           $
         </span>
-        <span className="text-5xl font-mono font-bold text-green-500 absolute left-1 top-3.5 animate-ping">
+        <span className="text-4xl font-mono font-bold text-green-500 absolute -left-6 top-4 animate-ping">
           $
         </span>
       </>
     )}
     <div
       className={cx(`w-2 my-1 rounded-full mr-6`, {
-        "bg-slate-200": !isOnboarded(admin),
-        "bg-yellow-500": isOnboarded(admin) && !isActive(admin),
-        "bg-green-500":
-          isActive(admin) && admin.subscriptionStatus !== `unpaid`,
-        "bg-green-200":
-          isActive(admin) && admin.subscriptionStatus === `unpaid`,
+        "bg-slate-200": getStatus(admin) === `nada`,
+        "bg-yellow-500": getStatus(admin) === `onboardedButInactive`,
+        "bg-blue-500": getStatus(admin) === `justMonitoring`,
+        "bg-green-500": getStatus(admin) === `justKeychains`,
+        "bg-gradient-to-b from-green-500 to-blue-500":
+          getStatus(admin) === `superUser`,
       })}
     />
     <div className="flex flex-col flex-grow">
@@ -91,6 +91,8 @@ const AdminCard: React.FC<{ admin: AdminData }> = ({ admin }) => (
                 admin.subscriptionStatus === `unpaid`,
               "bg-green-100 text-green-600":
                 admin.subscriptionStatus === `paid`,
+              "bg-pink-100 text-pink-600":
+                admin.subscriptionStatus === `pendingEmailVerification`,
             })}
           >
             {admin.subscriptionStatus}

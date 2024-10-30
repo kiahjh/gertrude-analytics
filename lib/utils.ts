@@ -1,23 +1,47 @@
 import type { AdminData } from "./types";
 
-// admin is active if it has children with installations and either monitoring turned on or keychains protecting said children
-export function isActive(admin: AdminData): boolean {
+export type AdminStatus =
+  | "nada"
+  | "onboardedButInactive"
+  | "justMonitoring"
+  | "justKeychains"
+  | "superUser";
+
+export function getStatus(admin: AdminData): AdminStatus {
   const hasChildrenWithInstallation = admin.children.some(
     (child) => child.installations.length > 0,
   );
   const hasChildrenWithMonitoring = admin.children.some(
     (child) => child.keyloggingEnabled || child.screenshotsEnabled,
   );
-  const hasKeychains = admin.numKeychains > 0;
+  const hasKeychainsInUse =
+    admin.numKeychains > 0 && admin.children.some((c) => c.numKeys > 0);
   const isAbleToUseTheApp = admin.subscriptionStatus !== `unpaid`;
 
+  if (!hasChildrenWithInstallation) {
+    return `nada`;
+  }
+  if (!isAbleToUseTheApp) {
+    return `onboardedButInactive`;
+  }
+  if (hasChildrenWithMonitoring && hasKeychainsInUse) {
+    return `superUser`;
+  }
+  if (hasChildrenWithMonitoring) {
+    return `justMonitoring`;
+  }
+  if (hasKeychainsInUse) {
+    return `justKeychains`;
+  }
+  return `onboardedButInactive`;
+}
+
+export function isActive(admin: AdminData): boolean {
   return (
-    hasChildrenWithInstallation &&
-    isAbleToUseTheApp &&
-    (hasChildrenWithMonitoring || hasKeychains)
+    getStatus(admin) !== `nada` && getStatus(admin) !== `onboardedButInactive`
   );
 }
 
 export function isOnboarded(admin: AdminData): boolean {
-  return admin.children.some((child) => child.installations.length > 0);
+  return getStatus(admin) !== `nada`;
 }
